@@ -40,6 +40,11 @@ export interface ServerConfig {
     enabled: boolean;
   };
   apollo: ApolloEnvironmentConfig;
+  azure: {
+    queueEnabled: boolean;
+    accountName: string;
+    accountKey: string;
+  };
 }
 
 export const serverConfig: ServerConfig = {
@@ -57,4 +62,12 @@ export const serverConfig: ServerConfig = {
     serviceName: 'event',
     servicePort: env.PORT as string,
   }),
+  azure: {
+    // both settings must be present to enable the queue
+    queueEnabled: Boolean(
+      env.AZ_QUEUE_ACCOUNT_NAME && env.AZ_QUEUE_ACCOUNT_KEY,
+    ),
+    accountName: env.AZ_QUEUE_ACCOUNT_NAME as string,
+    accountKey: env.AZ_QUEUE_ACCOUNT_KEY as string,
+  },
 };

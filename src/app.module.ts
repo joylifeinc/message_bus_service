@@ -10,6 +10,9 @@ import { buildJoyContext } from './joy.context';
 import { getDefaultMiddleware } from '@withjoy/server-core';
 import { TelemetryModule } from './telemetry/telemetry.module';
 import { HealthModule } from './health/health.module';
+import { MessageQueueModule } from './message-queue/message-queue.module';
+import { ApiModule } from './api/api.module';
+import { MessageModule } from './message/message.module';
 
 @Module({
   imports: [
@@ -18,11 +21,15 @@ import { HealthModule } from './health/health.module';
       driver: ApolloFederationDriver,
       autoSchemaFile: true,
       context: async (context) => {
-        return buildJoyContext(context);
+        const joyContext = await buildJoyContext(context);
+        return joyContext;
       },
     }),
     TelemetryModule,
     HealthModule,
+    MessageQueueModule,
+    ApiModule,
+    MessageModule,
   ],
   providers: [AppService],
 })

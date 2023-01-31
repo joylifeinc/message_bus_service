@@ -13,10 +13,12 @@ export const buildJoyContext = async (args: ContextConstructorArgs) => {
     identityUrl: serverConfig.clients.identity,
   });
   await joyContext.me();
-  return joyContext.currentUser;
+  return joyContext;
 };
 
 export const CurrentUserContext = createParamDecorator(
-  (data: unknown, ctx: ExecutionContext) =>
-    GqlExecutionContext.create(ctx).getContext().currentUser as UserFragment,
+  (data: unknown, ctx: ExecutionContext) => {
+    return GqlExecutionContext.create(ctx).getContext()
+      .currentUser as UserFragment;
+  },
 );

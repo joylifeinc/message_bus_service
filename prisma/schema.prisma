@@ -10,7 +10,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-model TestModel {
-  id String @id @default(uuid())
+model Message {
+  id        String @id @default(uuid())
+  toEmail   String
+  fromEmail String
+  status    String
 }
